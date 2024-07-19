@@ -32,8 +32,8 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	compileOnly 'org.projectlombok:lombok'
 
-	// h2
-	runtimeOnly 'com.h2database:h2'
+	// bean validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'

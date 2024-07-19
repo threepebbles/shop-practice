@@ -1,10 +1,10 @@
-package com.example.java21_practice;
+package com.example.practiceShop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Java21PracticeApplicationTests {
+class PracticeShopApplicationTests {
 
 	@Test
 	void contextLoads() {

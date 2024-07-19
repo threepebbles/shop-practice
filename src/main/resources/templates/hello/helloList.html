@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>이름</th>
+                <th>나이</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="hello : ${helloResponses}">
+                <td th:text="${hello.name}"></td>
+                <td th:text="${hello.age}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <ul class="nav nav-pills pull-right">
+        <li><a href="/hello/new">생성</a></li>
+    </ul>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

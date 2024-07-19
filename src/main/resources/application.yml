@@ -1,24 +1,33 @@
 spring:
   datasource:
-    # https://www.h2database.com/html/cheatSheet.html
-    # ???db? jdbc:h2:mem:test? ?? ???? ? ??
-    url: jdbc:h2:tcp://localhost/~/practice
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/practice
+    username: root
+    password: example!@3
 
   jpa:
+    open-in-view: true
     hibernate:
       ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        #        show_sql: true  # sout?? ?? ??
+        #        show_sql: true  # sout으로 로그 출력
         format_sql: true
-        # ??? ???? ??? ?? ??? ??? ?? (????? global ??? ?? ?)
+        # 일대다 관계에서 컬렉션 페치 조인의 크기를 결정 (실무에서는 global 세팅을 주로 함)
         default_batch_fetch_size: 100
+  # 에러 메세지 양식 경로
+  messages:
+    basename: errors
 
+#  data:
+#    redis:
+#      port: 6379
+#      host: localhost
 
 logging:
   level:
-    org.hibernate.SQL: debug  # logger? ?? ?? ??
-    org.hibernate.orm.jdbc.bind: trace  # ??? 3.0 + hibernate 6 ??
+    org.hibernate.SQL: debug  # logger를 통해 로그 출력
+    org.hibernate.orm.jdbc.bind: trace  # 스프링 3.0 + hibernate 6 기준
+
