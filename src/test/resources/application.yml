@@ -1,0 +1,38 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password: example!@3
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        #        show_sql: true  # sout으로 로그 출력
+        format_sql: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+  # 에러 메세지 양식 경로
+  messages:
+    basename: errors
+
+server:
+  port: 9000
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure.thymeleaf: DEBUG
+    org.hibernate.SQL: debug  # logger를 통해 로그 출력
+    org.hibernate.orm.jdbc.bind: trace  # 스프링 3.0 + hibernate 6 기준

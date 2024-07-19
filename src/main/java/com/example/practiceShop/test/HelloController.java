@@ -1,12 +1,14 @@
 package com.example.practiceShop.test;
 
 import jakarta.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller // RestController는 ViewResolver를 거치지 않음
@@ -30,7 +33,7 @@ public class HelloController {
      * 전체 리스트 표시
      */
     @GetMapping("")
-    public String list(Model model) {
+    public String list(Model model) throws IOException {
         // 엔티티가 변화하면 템플릿 스펙이 변화할 수 있기 때문에
         // 엔티티 객체를 그대로 사용하는 것보다 DTO를 반환해서 넘겨주도록 해야 함.
         List<HelloEntity> hellos = helloService.findHellos();
@@ -39,14 +42,19 @@ public class HelloController {
                         .toList();
 
         model.addAttribute("helloResponses", helloResponses);
-        return "/hello/helloList";
+
+        log.info("===========Template check===============");
+        new ClassPathResource("templates/hello/helloList.html").getInputStream();
+        log.info("===========Template exist===============");
+
+        return "hello/helloList";
     }
 
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("helloForm", new HelloForm());
 
-        return "/hello/createHelloForm";
+        return "hello/createHelloForm";
     }
 
     @PostMapping("/new")
@@ -63,11 +71,11 @@ public class HelloController {
                 }
             }
 
-            return "/hello/createHelloForm";
+            return "hello/createHelloForm";
         }
 
         HelloEntity hello = HelloEntity.createHello(helloForm.getAge(), helloForm.getName());
         helloService.save(hello);
-        return "redirect:/hello";
+        return "redirect:hello";
     }
 }

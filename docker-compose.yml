@@ -1,39 +1,30 @@
 version: '3'
 
 services:
-  database:
-    container_name: practice_mysql
+  shop_mysql:
     image: mysql/mysql-server:8.0
     restart: unless-stopped
     environment:
       MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: practice
+      MYSQL_DATABASE: shop
       MYSQL_ROOT_PASSWORD: example!@3
+    # {외부 노출 포트}:{도커 컨테이너 내부 포트}
     ports:
-      - '3306:3306'
+      - "13306:3306"
     volumes:
-      - ./mysql/conf.d:/etc/mysql/conf.d
-    command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
-    networks:
-      - bank_network
+      - /var/lib/mysql
 
-  application:
-    container_name: practice_spring
+  shop_spring:
     restart: on-failure
     build:
-      context: ../../..
-      dockerfile: ./submodule-config/Dockerfile
+      context: .
+      dockerfile: ./Dockerfile
     ports:
-      - "8000:8000"
+      - "9000:9000"
+    depends_on:
+      - shop_mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/bank_db?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:mysql://shop_mysql:3306/shop
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: example!@3
-    depends_on:
-      - database
-    networks:
-      - shop
-
-networks:
-  shop:
-    driver: bridge
