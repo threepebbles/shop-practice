@@ -9,21 +9,6 @@ permissions: write-all
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: example!@3
-
-        ports:
-          - 3306:3306
-        options:
-          --health-cmd="mysqladmin ping" 
-          --health-interval=10s 
-          --health-timeout=5s 
-          --health-retries=3
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4

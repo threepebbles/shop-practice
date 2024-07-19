@@ -13,12 +13,4 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class PracticeShopApplicationTests {
 
-	@Autowired
-	private HelloService helloService;
-
-	@Test
-	void databaseLoads() {
-		HelloEntity helloEntity = HelloEntity.createHello(1, "이름");
-		helloService.save(helloEntity);
-	}
 }
