@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    # https://www.h2database.com/html/cheatSheet.html
+    # ???db? jdbc:h2:mem:test? ?? ???? ? ??
+    url: jdbc:h2:tcp://localhost/~/practice
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #        show_sql: true  # sout?? ?? ??
+        format_sql: true
+        # ??? ???? ??? ?? ??? ??? ?? (????? global ??? ?? ?)
+        default_batch_fetch_size: 100
+
+
+logging:
+  level:
+    org.hibernate.SQL: debug  # logger? ?? ?? ??
+    org.hibernate.orm.jdbc.bind: trace  # ??? 3.0 + hibernate 6 ??
