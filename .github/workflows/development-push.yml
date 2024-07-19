@@ -9,7 +9,16 @@ permissions: write-all
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Set up MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 3306
+          container port: 3306
+          mysql database: 'test'
+          mysql root password: 'example!@3'
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
