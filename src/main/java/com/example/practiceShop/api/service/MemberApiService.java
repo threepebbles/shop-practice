@@ -30,7 +30,7 @@ public class MemberApiService {
 
     @Transactional
     public JoinMemberResponse join(String name, String email, String password) {
-        Member member = new Member(name, email, password);
+        Member member = new Member(name, email, encoder.encode(password));
 
         memberService.join(member);
         // access token, refresh token 발급
@@ -66,6 +66,10 @@ public class MemberApiService {
             throw new IllegalArgumentException("가입 이력이 존재하지 않는 이메일입니다.");
         }
         Member member = members.get(0);
+        if (!encoder.matches(password, member.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
         // access token, refresh token 발급
         String accessToken = jwtProvider.createAccessToken(member.getId());
         String refreshToken = jwtProvider.createRefreshToken(member.getId());
