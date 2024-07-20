@@ -69,30 +69,49 @@
 
 ---
 
-# 패키지 역할
+# 패키지 별 역할
 
 ## test
 
-* 실제 앱과 아무 관련없는 테스트용 다목적 코드 작성 공간
-* 다음과 같은 용도로 코드가 추가될 수 있음
+* 실제 앱과 아무 관련없는 테스트용 다목적 코드 작성 공간 (없는 코드 취급해도 되는 공간)
+* 보통 다음과 같은 용도로 사용
     * CI/CD가 제대로 동작하는지 확인
-    * 프레임워크 간 호환성 확인 등
+    * 프레임워크 간 호환성 확인
 
 ## api
 
-* Rest Controller layer
-* REST API, `@RestController`와 관련된 코드만 포함
+### api.controller
+
+* Rest Controller Layer
+* Json을 기반으로 응답하는 `@RestController`와 관련된 코드만 포함
 * ex) Request, Response를 위한 DTO, @RestController 어노테이션이 붙은 컨트롤러
+
+### api.service
+
+* Component Service Layer
+* Rest Controller에서 수행해야하는 비즈니스 로직을 모두 Component Service에서 수행
+* Rest Controller는 validation, http status code 반환 등 다른 역할에 집중하게 하려고 분리
+
+## config
+
+* 스프링 글로벌 설정, 빈 등록 등을 위한 공간
+
+## domain
+
+* 하나의 Aggregate 단위로 하위 패키지 분리
+
+## util
+
+* 자주 쓰는 연산을 편하게 사용하려고 만들어 놓은 코드 모음
+* 어느 프로젝트에서나 동일하게 동작해야 하는 코드
+* **무조건 정적 팩토리 메소드로 작성 가능해야 함**
+* ex) 날짜 계산 함수, 랜덤 함수
 
 ## view
 
 * Server Side Rendering layer
 * ViewResolver를 거치는 `@Controller`와 관련된 코드만 포함
 * ex) 사용자 입력 폼 관련 DTO, Thymeleaf를 이용해서 html 템플릿을 반환하는 컨트롤러
-
-## domain
-
-* 하나의 Aggregate 단위로 하위 패키지 분리
 
 ---
 
