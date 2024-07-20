@@ -14,6 +14,12 @@ services:
     volumes:
       - /var/lib/mysql
 
+  shop_redis:
+    image: redis:7.2-alpine
+    ports:
+      - "6379:6379"
+    restart: always
+
   shop_spring:
     restart: on-failure
     build:
@@ -23,6 +29,7 @@ services:
       - "9000:9000"
     depends_on:
       - shop_mysql
+      - shop_redis
     environment:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_DATASOURCE_URL: jdbc:mysql://shop_mysql:3306/shop

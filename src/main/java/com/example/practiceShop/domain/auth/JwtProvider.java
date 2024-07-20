@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +54,7 @@ public class JwtProvider {
     /**
      * access token 생성
      */
-    public String createAccessToken(Long memberId) {
+    public String createAccessToken(UUID memberId) {
         Claims claims = Jwts.claims();
         Date expiration = DateUtil.millisToDate(DateUtil.now().getTime() + accessTokenExpirationInSeconds * 1000L);
 
@@ -65,7 +66,7 @@ public class JwtProvider {
     /**
      * refresh token 생성
      */
-    public String createRefreshToken(Long memberId) {
+    public String createRefreshToken(UUID memberId) {
         Claims claims = Jwts.claims();
         Date expiration = DateUtil.millisToDate(DateUtil.now().getTime() + refreshTokenExpirationInSeconds * 1000L);
 
@@ -111,12 +112,9 @@ public class JwtProvider {
                 .compact();
     }
 
-    public Long extractId(String jwt) {
+    public UUID extractId(String jwt) {
         Object id = extractClaimByKey(jwt, "id");
-        if (!(id instanceof Long)) {
-            throw new IllegalStateException("Long 타입이 아닙니다.");
-        }
-        return (Long) id;
+        return UUID.fromString(id.toString());
     }
 
     public Object extractClaimByKey(String jwt, String key) {

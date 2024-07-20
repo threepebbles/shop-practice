@@ -1,6 +1,7 @@
 package com.example.practiceShop.domain.member;
 
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ public class MemberService {
      * 회원 가입
      */
     @Transactional  // 따로 Transcational 어노테이션을 부여하면 이게 더 우선권을 가짐
-    public Long join(Member member) {
+    public UUID join(Member member) {
         // 가입 가능 여부 검증
         validateDuplicateMember(member);
 
@@ -41,7 +42,7 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Member findOne(Long memberId) {
+    public Member findOne(UUID memberId) {
         return memberRepository.findOne(memberId);
     }
 
@@ -57,7 +58,7 @@ public class MemberService {
      * 회원 수정
      */
     @Transactional
-    public void update(Long id, String name) {
+    public void update(UUID id, String name) {
         Member member = memberRepository.findOne(id);
         member.updateName(name);
     }
@@ -66,7 +67,7 @@ public class MemberService {
      * 회원 삭제
      */
     @Transactional
-    public void remove(Long id) {
+    public void remove(UUID id) {
         Member member = memberRepository.findOne(id);
         memberRepository.remove(member);
     }

@@ -1,17 +1,19 @@
 package com.example.practiceShop.domain.auth;
 
 import com.example.practiceShop.domain.member.Member;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class RefreshToken {
     @Id
@@ -22,6 +24,7 @@ public class RefreshToken {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Column(length = 400)
     private String refreshToken;
 
     public RefreshToken(Member member, String jwt) {

@@ -5,6 +5,7 @@ import com.example.practiceShop.domain.auth.Auth;
 import com.example.practiceShop.domain.auth.Auth.UserRole;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +60,7 @@ public class MemberApiController {
     @Data
     @AllArgsConstructor
     public static class JoinMemberResponse {
-        private Long id;
+        private UUID id;
         // 가입과 동시에 로그인 되도록 하기 위해 토큰 반환
         private String accessToken;
         private String refreshToken;

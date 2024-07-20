@@ -3,6 +3,7 @@ package com.example.practiceShop.domain.member;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,12 +13,12 @@ public class MemberRepository {
     private final EntityManager em;
     private final JPAQueryFactory queryFactory;
 
-    public Long save(Member member) {
+    public UUID save(Member member) {
         em.persist(member);
         return member.getId();
     }
 
-    public Member findOne(Long id) {
+    public Member findOne(UUID id) {
         return em.find(Member.class, id);
     }
 

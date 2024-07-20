@@ -8,8 +8,10 @@ import com.example.practiceShop.domain.auth.RefreshTokenRepository;
 import com.example.practiceShop.domain.member.Member;
 import com.example.practiceShop.domain.member.MemberService;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,8 @@ public class MemberApiService {
 
     private final BCryptPasswordEncoder encoder;
 
-    private final Long logoutTimeoutInSeconds = 1800L;
+    @Value("${jwt.access-token-expiration-in-seconds}")
+    private Long logoutTimeoutInSeconds;
 
     @Transactional
     public JoinMemberResponse join(String name, String email, String password) {
@@ -44,16 +47,18 @@ public class MemberApiService {
 
     @Transactional
     public void logout(String accessToken) {
-        Long memberId = jwtProvider.extractId(accessToken);
+        UUID memberId = jwtProvider.extractId(accessToken);
         Member member = memberService.findOne(memberId);
         if (member == null) {
             throw new IllegalArgumentException("존재하지 않는 회원입니다.");
         }
 
         // refresh token 제거
-        RefreshToken refreshToken = refreshTokenRepository.findOne(memberId);
-        if (refreshToken != null) {
-            refreshTokenRepository.remove(refreshToken);
+        List<RefreshToken> refreshTokens = refreshTokenRepository.findByMember(member);
+        if (!refreshTokens.isEmpty()) {
+            for (RefreshToken refreshToken : refreshTokens) {
+                refreshTokenRepository.remove(refreshToken);
+            }
         }
 
         // access token redis에 저장 (블랙리스트 용도)

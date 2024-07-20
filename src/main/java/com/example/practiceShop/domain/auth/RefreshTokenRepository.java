@@ -1,5 +1,6 @@
 package com.example.practiceShop.domain.auth;
 
+import com.example.practiceShop.domain.member.Member;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,10 @@ public class RefreshTokenRepository {
         return refreshToken.getId();
     }
 
-    public RefreshToken findOne(Long id) {
-        return em.find(RefreshToken.class, id);
+    public List<RefreshToken> findByMember(Member member) {
+        return em.createQuery("select r from RefreshToken r where r.member = :member", RefreshToken.class)
+                .setParameter("member", member)
+                .getResultList();
     }
 
     public List<RefreshToken> findAll() {
