@@ -1,8 +1,8 @@
-name: push on development branch
+name: push on main branch
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "main" ]
 
 permissions: write-all
 
@@ -84,7 +84,7 @@ jobs:
         id: docker_build
         with:
           context: .
-          file: ./submodule-config/Dockerfile
+          file: ./Dockerfile
           push: true
           tags: |
             ghcr.io/${{ env.OWNER_LC }}/shop-practice:latest
