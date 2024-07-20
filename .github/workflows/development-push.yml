@@ -30,20 +30,17 @@ jobs:
         with:
           arguments: clean bootJar
 
-      # Unit test 진행
       - name: Test with Gradle
         run: ./gradlew --info test
         env:
           SPRING_PROFILES_ACTIVE: test
 
-      # Unit test에 대한 리포트 작성
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
           files: '**/build/test-results/test/TEST-*.xml'
 
-      # 테스트 실패 시, 실패한 코드 라인에 Check 코멘트 등록
       - name: Comment to test failed code line
         uses: mikepenz/action-junit-report@v3
         if: always()
