@@ -33,7 +33,11 @@
 
 ### JPA/Hibernate
 - [ ] QueryDSL
+- [ ] Spring Data JPA
 - [ ] JDBC
+- 다양한 최적화 기법들
+  - [ ] 지연 로딩과 조회 성능 최적화
+  - [ ] 컬렉션 조회 최적화
 
 ### Monitoring
 - [ ] Grafana
