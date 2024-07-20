@@ -65,6 +65,7 @@ public class MemberApiService {
         redis.opsForValue().set(accessToken, "", logoutTimeoutInSeconds, TimeUnit.SECONDS);
     }
 
+    @Transactional
     public LoginMemberResponse login(String email, String password) {
         List<Member> members = memberService.findByEmail(email);
         if (members.isEmpty()) {
