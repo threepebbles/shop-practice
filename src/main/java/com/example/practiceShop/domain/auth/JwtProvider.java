@@ -1,4 +1,4 @@
-package com.example.practiceShop.auth;
+package com.example.practiceShop.domain.auth;
 
 import com.example.practiceShop.util.DateUtil;
 import io.jsonwebtoken.Claims;

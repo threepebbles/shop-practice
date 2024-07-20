@@ -1,8 +1,8 @@
 package com.example.practiceShop.interceptor;
 
-import com.example.practiceShop.auth.Auth;
-import com.example.practiceShop.auth.Auth.UserRole;
-import com.example.practiceShop.auth.JwtProvider;
+import com.example.practiceShop.domain.auth.Auth;
+import com.example.practiceShop.domain.auth.Auth.UserRole;
+import com.example.practiceShop.domain.auth.JwtProvider;
 import com.example.practiceShop.exception.LoggedOutAccessToken;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

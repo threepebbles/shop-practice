@@ -3,28 +3,35 @@ spring:
     activate:
       on-profile: test
 
-#  datasource:
-#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-#    url: jdbc:tc:mysql:8.0:///test
-#    username: root
-#    password: example!@3
+  #  datasource:
+  #    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  #    url: jdbc:tc:mysql:8.0:///test
+  #    username: root
+  #    password: example!@3
 
   jpa:
     open-in-view: true
     hibernate:
       ddl-auto: create
+      #      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         #        show_sql: true  # sout으로 로그 출력
         format_sql: true
+        # 일대다 관계에서 컬렉션 페치 조인의 크기를 결정 (실무에서는 global 세팅을 주로 함)
+        default_batch_fetch_size: 100
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
     suffix: .html
-
-  # 에러 메세지 양식 경로
+  # redis 설정
+  data:
+    redis:
+      port: 6379
+      host: redis
+    # 에러 메세지 양식 경로
   messages:
     basename: errors
 
@@ -36,3 +43,12 @@ logging:
     org.springframework.boot.autoconfigure.thymeleaf: DEBUG
     org.hibernate.SQL: debug  # logger를 통해 로그 출력
     org.hibernate.orm.jdbc.bind: trace  # 스프링 3.0 + hibernate 6 기준
+
+#==========커스텀 변수============#
+jwt:
+  secret: SUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRET
+  access-token-subject: access-token
+  refresh-token-subject: refresh-token
+  admin-subject: admin
+  access-token-expiration-in-seconds: 1800  # 30분
+  refresh-token-expiration-in-seconds: 1209600  # 14일

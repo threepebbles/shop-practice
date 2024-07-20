@@ -1,4 +1,4 @@
-package com.example.practiceShop.auth;
+package com.example.practiceShop.domain.auth;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

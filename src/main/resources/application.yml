@@ -44,7 +44,7 @@ logging:
 
 #==========커스텀 변수============#
 jwt:
-  secret: SUPERSECRET
+  secret: SUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRET
   access-token-subject: access-token
   refresh-token-subject: refresh-token
   admin-subject: admin
@@ -95,6 +95,6 @@ logging:
 
 #==========커스텀 변수============#
 jwt:
-  secret: SECRET
+  secret: SUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRETSUPERSECRET
   access-token-expiration-in-seconds: 1800  # 30분
   refresh-token-expiration-in-seconds: 1209600  # 14일

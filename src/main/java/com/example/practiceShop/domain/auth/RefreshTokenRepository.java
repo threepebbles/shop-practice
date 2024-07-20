@@ -1,4 +1,4 @@
-package com.example.practiceShop.auth;
+package com.example.practiceShop.domain.auth;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
