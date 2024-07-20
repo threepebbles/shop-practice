@@ -36,18 +36,23 @@
 ### Spring Boot
 
 - [x] Spring MVC
+- [x] Spring Security
+- [x] Interceptor
 - [ ] AOP
-- [ ] Spring Security
 - [ ] Task Scheduler
 
 ### JPA/Hibernate
 
-- [ ] QueryDSL
+- [x] QueryDSL
 - [ ] Spring Data JPA
 - [ ] JDBC
 - 다양한 최적화 기법들
     - [ ] 지연 로딩과 조회 성능 최적화
     - [ ] 컬렉션 조회 최적화
+
+### Auth
+
+- [x] jsonwebtoken
 
 ### Monitoring
 
