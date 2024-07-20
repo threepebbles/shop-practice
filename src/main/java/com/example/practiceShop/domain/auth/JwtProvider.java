@@ -31,6 +31,26 @@ public class JwtProvider {
     private Long refreshTokenExpirationInSeconds;
 
     /**
+     * JWT 검증
+     * <p>
+     * 1. JWT was incorrectly constructed
+     * <p>
+     * 2. JWS signature was discovered, but could not be verified
+     * <p>
+     * 3. expired token
+     */
+    public void validateJwt(String jwt) {
+        JwtParser jwtParser = Jwts.parserBuilder()
+                .setSigningKey(getSecretKey())
+                .build();
+        try {
+            jwtParser.parse(jwt);
+        } catch (Exception e) {
+            throw new IllegalStateException("잘못된 JWT입니다.");
+        }
+    }
+
+    /**
      * access token 생성
      */
     public String createAccessToken(Long memberId) {
@@ -56,7 +76,7 @@ public class JwtProvider {
 
     public void validateAccessToken(String accessToken) {
         validateJwt(accessToken);
-        String sub = getClaims(accessToken).getSubject();
+        String sub = extractClaims(accessToken).getSubject();
         if (!sub.equals(accessTokenSubject)) {
             throw new IllegalStateException("access token이 아닙니다.");
         }
@@ -64,7 +84,7 @@ public class JwtProvider {
 
     public void validateRefreshToken(String refreshToken) {
         validateJwt(refreshToken);
-        String sub = getClaims(refreshToken).getSubject();
+        String sub = extractClaims(refreshToken).getSubject();
         if (!sub.equals(refreshTokenSubject)) {
             throw new IllegalStateException("refresh token이 아닙니다.");
         }
@@ -72,7 +92,7 @@ public class JwtProvider {
 
     public void validateAdmin(String jwt) {
         validateJwt(jwt);
-        String sub = getClaims(jwt).getSubject();
+        String sub = extractClaims(jwt).getSubject();
         if (!sub.equals(adminSubject)) {
             throw new IllegalStateException("admin이 아닙니다.");
         }
@@ -91,35 +111,33 @@ public class JwtProvider {
                 .compact();
     }
 
+    public Long extractId(String jwt) {
+        Object id = extractClaimByKey(jwt, "id");
+        if (!(id instanceof Long)) {
+            throw new IllegalStateException("Long 타입이 아닙니다.");
+        }
+        return (Long) id;
+    }
+
+    public Object extractClaimByKey(String jwt, String key) {
+        validateJwt(jwt);
+
+        Claims claims = extractClaims(jwt);
+        if (!claims.containsKey(key)) {
+            throw new IllegalStateException("'" + key + "'가 존재하지 않습니다.");
+        }
+        return claims.get(key);
+    }
+
     /**
      * jwt 내 Claims 추출
      */
-    private Claims getClaims(String jwt) {
+    public Claims extractClaims(String jwt) {
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey.getBytes())
                 .build()
                 .parseClaimsJws(jwt)
                 .getBody();
-    }
-
-    /**
-     * JWT 검증
-     * <p>
-     * 1. JWT was incorrectly constructed
-     * <p>
-     * 2. JWS signature was discovered, but could not be verified
-     * <p>
-     * 3. expired token
-     */
-    public void validateJwt(String jwt) {
-        JwtParser jwtParser = Jwts.parserBuilder()
-                .setSigningKey(getSecretKey())
-                .build();
-        try {
-            jwtParser.parse(jwt);
-        } catch (Exception e) {
-            throw new IllegalStateException("잘못된 JWT입니다.");
-        }
     }
 
     private Key getSecretKey() {

@@ -1,5 +1,6 @@
 package com.example.practiceShop.domain.member;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -17,12 +18,17 @@ public class Member {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
+    
+    private String password;
 
     @Builder
-    public Member(String name, String email) {
+    public Member(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     public void updateName(String name) {

@@ -29,4 +29,8 @@ public class RefreshTokenRepository {
                 .setParameter("jwt", jwt)
                 .getResultList();
     }
+
+    public void remove(RefreshToken refreshToken) {
+        em.remove(refreshToken);
+    }
 }

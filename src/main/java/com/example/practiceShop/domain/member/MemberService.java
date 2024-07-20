@@ -45,6 +45,14 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    public List<Member> findByEmail(String email) {
+        List<Member> members = memberRepository.findByEmail(email);
+        if (members.size() >= 2) {
+            throw new IllegalStateException("이메일이 같은 회원이 둘 이상 존재합니다.");
+        }
+        return members;
+    }
+
     /**
      * 회원 수정
      */
@@ -52,5 +60,14 @@ public class MemberService {
     public void update(Long id, String name) {
         Member member = memberRepository.findOne(id);
         member.updateName(name);
+    }
+
+    /**
+     * 회원 삭제
+     */
+    @Transactional
+    public void remove(Long id) {
+        Member member = memberRepository.findOne(id);
+        memberRepository.remove(member);
     }
 }
