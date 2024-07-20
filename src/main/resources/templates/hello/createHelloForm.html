@@ -1,15 +1,17 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: header}"></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <style>
     .fieldError {
         border-color: #bd2130;
     }
 </style>
+<head th:replace="~{fragments/header :: header}">
+    <title>Hello Shop</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
 <body>
 
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
 
     <form action="/hello/new" method="post" role="form" th:object="${helloForm}">
         <div class="form-group">
@@ -30,7 +32,6 @@
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>
     <br/>
-    <div th:replace="~{fragments/footer :: footer}"></div>
 </div> <!-- /container -->
 
 </body>

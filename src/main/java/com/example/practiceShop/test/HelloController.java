@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
-@Controller // RestController는 ViewResolver를 거치지 않음
-@RequestMapping("/hello")
+@Controller
 @RequiredArgsConstructor
 @Slf4j
 public class HelloController {
@@ -32,7 +32,7 @@ public class HelloController {
     /**
      * 전체 리스트 표시
      */
-    @GetMapping("")
+    @GetMapping("/hello")
     public String list(Model model) throws IOException {
         // 엔티티가 변화하면 템플릿 스펙이 변화할 수 있기 때문에
         // 엔티티 객체를 그대로 사용하는 것보다 DTO를 반환해서 넘겨주도록 해야 함.
@@ -40,24 +40,26 @@ public class HelloController {
         List<HelloResponse> helloResponses
                 = hellos.stream().map(HelloResponse::createHelloResponse)
                         .toList();
-
         model.addAttribute("helloResponses", helloResponses);
 
-        log.info("===========Template check===============");
-        new ClassPathResource("templates/hello/helloList.html").getInputStream();
-        log.info("===========Template exist===============");
+//        log.info("===========Template check===============");
+//        new ClassPathResource("templates/hello/helloList.html").getInputStream();
+//        log.info("===========Template exist===============");
+
+        // "/hello/helloList"는 jar 파일로 실행 시 경로 압축 과정에서 템플릿을 불러오지 못하는 오류가 발생할 수 있음
+        // preceding slash 제거
 
         return "hello/helloList";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/hello/new")
     public String createForm(Model model) {
         model.addAttribute("helloForm", new HelloForm());
 
         return "hello/createHelloForm";
     }
 
-    @PostMapping("/new")
+    @PostMapping("/hello/new")
     // 원래 Valid에서 에러가 발생하면 Controller 코드가 실행안되고 에러페이지를 요청하는데,
     // BindingResult 가 파라미터에 있으면 코드가 그대로 실행됨 (에러도 코드 내에서 처리하겠다는 의미)
     public String create(@Valid HelloForm helloForm, BindingResult result) {
