@@ -85,3 +85,6 @@ gradle-app.setting
 ## Docker ###
 **/Dockerfile
 **/docker-comopse*
+
+## QueryDSL ###
+**/generated
