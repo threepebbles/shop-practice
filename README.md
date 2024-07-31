@@ -17,15 +17,18 @@
 ### Docker & Docker compose
 
 - [ ] 로컬 환경, 테스트 환경, 개발 환경 구분
-- 무중단 배포
-    - [ ] blue/green 배포
+- [ ] 무중단 배포
 
-### Github Actions
+### Github Actions (CI)
 
 - [x] workflow, job, step 이해하기
 - [x] 단위 테스트 환경 구축해보기
 - [x] 테스트 결과 리포트 생성 및 시각화
 - [x] Docker 이미지 생성 및 Docker 저장소(Docker Container Registry)에 저장
+
+### ArgoCD (CD)
+
+- [ ] Kubernetes 배포 환경 구축
 
 ## Backend 🔙
 
