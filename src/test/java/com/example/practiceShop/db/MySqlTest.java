@@ -12,16 +12,17 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 public class MySqlTest {
+
     @Autowired
-	private HelloService helloService;
+    private HelloService helloService;
 
     @Autowired
     private HelloRepository helloRepository;
 
     @Test
     void setHelloServiceTest() {
-		HelloEntity helloEntity = HelloEntity.createHello(1, "이름");
-		Long id = helloService.save(helloEntity);
+        HelloEntity helloEntity = HelloEntity.createHello(1, "이름");
+        Long id = helloService.save(helloEntity);
 
         HelloEntity findHello = helloRepository.findOne(id);
         Assertions.assertThat(findHello.getAge()).isEqualTo(1);
