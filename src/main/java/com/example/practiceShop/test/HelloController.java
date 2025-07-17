@@ -3,7 +3,6 @@ package com.example.practiceShop.test;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -13,22 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller // RestController는 ViewResolver를 거치지 않음
 @RequestMapping("/hello")
 @RequiredArgsConstructor
 @Slf4j
 public class HelloController {
+
     private final HelloService helloService;
     private final MessageSource messageSource;
-
-
+    
     /**
      * 전체 리스트 표시
      */
@@ -39,7 +35,7 @@ public class HelloController {
         List<HelloEntity> hellos = helloService.findHellos();
         List<HelloResponse> helloResponses
                 = hellos.stream().map(HelloResponse::createHelloResponse)
-                        .toList();
+                .toList();
 
         model.addAttribute("helloResponses", helloResponses);
 
@@ -63,9 +59,10 @@ public class HelloController {
     public String create(@Valid HelloForm helloForm, BindingResult result) {
         if (result.hasErrors()) {
             log.info("errors: {}", result);
-            for(FieldError fieldError: result.getFieldErrors()) {
-                if(fieldError.getCode().contains("typeMismatch")) {
-                    String typeMismatch = messageSource.getMessage("typeMismatch", null, LocaleContextHolder.getLocale());
+            for (FieldError fieldError : result.getFieldErrors()) {
+                if (fieldError.getCode().contains("typeMismatch")) {
+                    String typeMismatch = messageSource.getMessage("typeMismatch", null,
+                            LocaleContextHolder.getLocale());
                     log.info("typeMismatch Properties Msg : {}", typeMismatch);
                     log.info("typeMismatch Default Msg : {}", fieldError.getDefaultMessage());
                 }

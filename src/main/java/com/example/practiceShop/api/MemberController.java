@@ -1,2 +1,5 @@
-package com.example.practiceShop.api;public class MemberController {
+package com.example.practiceShop.api;
+
+public class MemberController {
+    
 }
