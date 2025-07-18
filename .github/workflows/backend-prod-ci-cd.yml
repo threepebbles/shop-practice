@@ -102,4 +102,22 @@ jobs:
             ghcr.io/${{ env.OWNER_LC }}/shop-practice:latest
             ghcr.io/${{ env.OWNER_LC }}/shop-practice:${{ steps.tag_version.outputs.new_tag }}
 
-      # TODO: AWS ssh 연결 및 배포 스크립트 실행
+      # TODO: ssh 연결 및 배포 스크립트 실행
+#      - name: Run Script on EC2 using SSH
+#        uses: appleboy/ssh-action@v1
+#        with:
+#          host: ${{ secrets.EC2_HOST }}
+#          username: ${{ secrets.EC2_USERNAME }}
+#          key: ${{ secrets.EC2_SSH_KEY }}
+#          script: |
+#            bash ~/CD.sh
+
+#      - name: Prepare SSH Key
+#        run: |
+#          mkdir -p ~/.ssh
+#          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#
+#      - name: execute setup.sh on EC2 using SSH
+#        run: |
+#          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "bash ~/CD.sh"
